@@ -1,0 +1,20 @@
+CACHE MANIFEST
+
+CACHE:
+about.html
+appcache-loader.html
+appcache-nanny.js
+index.html
+left-page-1.html
+left-page-2.html
+services.html
+css/styles.min.css
+js/main.min.js
+
+NETWORK:
+*
+
+SETTINGS:
+prefer-online
+
+# hash: cfc182f175380ae3f397297e6fe0c3e454e559d65d727314cc9ced0f7890c986

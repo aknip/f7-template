@@ -10,7 +10,7 @@
 
 ## How to develop:
 - npm run watch
-- open https://preview.c9users.io/aknip/simple-f7-template/src/index.html
+- open https://preview.c9users.io/aknip/f7-template/src/index.html
 
 
 
