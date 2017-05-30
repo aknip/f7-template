@@ -39,11 +39,11 @@
  https://github.com/teambition/gulp-ssh
 
 ## git Notes
-git add --all
-git commit -m "first commit"
-git push origin master
-
-for a shortcut add this lines to .git/config in this project:
+- Commit changes to git:
+  git add --all
+  git commit -m "first commit"
+  git push origin master
+- for a shortcut add this lines to .git/config in this project:
 [alias]
     cmp = "!f() { git add -A && git commit -m \"$@\" && git push; }; f"
-Usage in terminal: git cmp "Long commit message goes here"
+  Usage in terminal: git cmp "Long commit message goes here"
