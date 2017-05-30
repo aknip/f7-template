@@ -27,7 +27,9 @@ var manifest = require('gulp-manifest');
 var replace = require('gulp-replace');
 var gutil = require("gulp-util");
 var webpack = require('webpack-stream');
+var deploy = require("gulp-gh-pages");
 var fs = require("fs");
+var dist_folder = "dist/f7-template";
 
 
 // fetch command line arguments and store in variable 'arg'
@@ -71,40 +73,21 @@ gulp.task('webpack', function() {
 });
 
 
+// Deploy to github pages
+gulp.task('deploy', function () {
+  gulp.src( "dist/**/*.*")
+      .pipe(deploy({ 
+        remoteUrl: "https://github.com/aknip/aknip.github.io.git",
+        branch: "master"}));
+});
 
 
 // Analyzes HTML files for JS and CSS sources, concatenates and minifies them
 // In index.html the paths to the single JS and CSS files will be replaced by the minified ones, these sections are marked with <!--build: .... -->
-gulp.task('userefWEG', function(){
-  var stream = gulp.src('src/*.html')
-    .pipe(useref())
-    
-     if (arg.appcache == 'false') {
-        console.log('No appcache generated.');
-        stream
-            .pipe(replace('<!-- gulp-build: include appcache-nanny.js here -->', '<!-- gulp build info: No appcache-nanny integrated -->'))
-    }
-    else {
-        stream
-            .pipe(replace('<!-- gulp-build: include appcache-nanny.js here -->', '<script type="text/javascript" src="appcache-nanny.js" async></script>'))
-    }
-    
-    // String replace some parts for final build
-    stream
-        .pipe(replace('<!-- gulp-build: include loading-spinner here -->', fs.readFileSync('./src/loading-spinner.include')))
-    
-    // Minifies JS
-        .pipe(gulpIf('src/js/*.js', uglify()))
-
-    // Minifies CSS
-        .pipe(gulpIf('src/css/*.css', cssnano()))
-
-        .pipe(gulp.dest('dist'))
-    
-  return stream;
-});
-
 gulp.task('useref', function(){
+  
+  if (arg.appcache == 'false') {};
+  
   return gulp.src('src/*.html')
     .pipe(useref())
     
@@ -118,25 +101,25 @@ gulp.task('useref', function(){
     // Minifies CSS
     .pipe(gulpIf('src/css/*.css', cssnano()))
 
-    .pipe(gulp.dest('dist'))
+    .pipe(gulp.dest(dist_folder))
 });
 
 
 
 gulp.task('copyfonts', function() {
   return gulp.src('app/fonts/**/*')
-  .pipe(gulp.dest('dist/fonts'))
+  .pipe(gulp.dest(dist_folder + '/fonts'))
 })
 
 
 gulp.task('copyimages', function() {
   return gulp.src('f7/examples/plasma-agcs-digpos/img/**/*')
-  .pipe(gulp.dest('dist/img'))
+  .pipe(gulp.dest(dist_folder +'/img'))
 })
 
 gulp.task('copyjs', function() {
   return gulp.src(['src/vendor/appcache-nanny/appcache-nanny.js','src/vendor/appcache-nanny/appcache-loader.html'])
-  .pipe(gulp.dest('dist'))
+  .pipe(gulp.dest(dist_folder))
 })
 
 // Copy the extra CSS files
@@ -144,7 +127,7 @@ gulp.task('copycss', function() {
   return gulp.src([
       'f7/examples/plasma-central/css/plasma-desktop-style.css' , 
       'f7/examples/plasma-central/css/plasma-tablet-style.css' ])
-  .pipe(gulp.dest('dist/css'))
+  .pipe(gulp.dest(dist_folder + '/css'))
 })
 
 
@@ -154,13 +137,13 @@ gulp.task('optimizeimages', function(){
   .pipe(cache(imagemin({
       interlaced: true
     })))
-  .pipe(gulp.dest('dist/images'))
+  .pipe(gulp.dest(dist_folder + '/images'))
 });
 
 
 
 gulp.task('clean:dist', function() {
-  return del.sync('dist');
+  return del.sync(dist_folder);
 })
 
 
@@ -170,7 +153,7 @@ gulp.task('clean:dev', function() {
 
 
 gulp.task('manifest', function(){
-  gulp.src(['dist/**/*'], { base: './dist/' })
+  gulp.src([dist_folder+'/**/*'], { base: './'+dist_folder+'/' })
     .pipe(manifest({
       hash: true,
       preferOnline: true,
@@ -178,7 +161,7 @@ gulp.task('manifest', function(){
       filename: 'manifest.appcache',
       exclude: 'manifest.appcache'
      }))
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest(dist_folder));
 });
 
 

@@ -2,6 +2,7 @@
 https://github.com/aknip/f7-template/
 
 
+
 ## Info
 - Based on http://framework7.io/examples/split-view-panel/
 
@@ -18,6 +19,11 @@ https://github.com/aknip/f7-template/
 - commit changes to git with: git cmp "Long commit message goes here" 
 
 
+## How to build and deploy to server
+- gulp build
+- gulp deploy
+
+
 ## How it works:
 - All source files are in /src
 - npm run watch: runs webpack dev server, which compiles js into dev/js-bundled/
@@ -32,6 +38,7 @@ https://github.com/aknip/f7-template/
 
 ## Gulp tasks
 - gulp build: runs webpack, copies, minifies etc. everything into dist/
+- gulp deploy: deploys dist/ folder to github pages => result is in project-folder "f7-template"
 - Tasks:
   gulp hello: check if gulp is alive, just output of console.log
   gulp useref: Analyzes HTML files for JS and CSS sources, concatenates and minifies them into dist/
@@ -53,10 +60,11 @@ https://github.com/aknip/f7-template/
   [alias]
   cmp = "!f() { git add -A && git commit -m \"$@\" && git push; }; f"
   Usage in terminal: git cmp "Long commit message goes here"
-- Cache username / password for commits:xxx
-  
+- Cache username / password for commits (for 24 hrs / 86400 secs):
+  git config credential.helper store
+  git push origin master
+  git config --global credential.helper 'cache --timeout 86400'
 - Creation of a new git / c9 project: 1. create repo in github 2. clone to local filesystem 3. add project files and commit (see above) 4. create new c9 project based on git repo
-
 
 
 ************************************************************
