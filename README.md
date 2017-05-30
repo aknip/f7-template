@@ -53,7 +53,7 @@ https://github.com/aknip/f7-template/
   [alias]
   cmp = "!f() { git add -A && git commit -m \"$@\" && git push; }; f"
   Usage in terminal: git cmp "Long commit message goes here"
-- Cache username / password for commits:
+- Cache username / password for commits:xxx
   
 - Creation of a new git / c9 project: 1. create repo in github 2. clone to local filesystem 3. add project files and commit (see above) 4. create new c9 project based on git repo
 
