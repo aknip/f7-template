@@ -11,7 +11,7 @@
 ## How to develop:
 - npm run watch
 - open https://preview.c9users.io/aknip/f7-template/src/index.html
-
+- commit changes to git with: git cmp "Long commit message goes here" 
 
 
 ## How it works:
@@ -37,3 +37,13 @@
  https://github.com/morris/vinyl-ftp
  https://github.com/jwir3/gulp-ssh-deploy
  https://github.com/teambition/gulp-ssh
+
+## git Notes
+git add --all
+git commit -m "first commit"
+git push origin master
+
+for a shortcut add this lines to .git/config in this project:
+[alias]
+    cmp = "!f() { git add -A && git commit -m \"$@\" && git push; }; f"
+Usage in terminal: git cmp "Long commit message goes here"
